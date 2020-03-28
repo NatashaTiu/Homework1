@@ -55,5 +55,5 @@ def only_alphabet(str1):
     return str2
 
 
-res = only_alphabet("Some text,,, 343 !!! again text&*!")
-print(res)
+#res = only_alphabet("Some text,,, 343 !!! again text&*!")
+#print(res)

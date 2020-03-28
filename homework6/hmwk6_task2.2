@@ -1,0 +1,101 @@
+1import datetime
+2
+3class Person:
+4    def __init__(self, full_name, birth_year):
+5        self.full_name = full_name
+6        self.birth_year = birth_year
+7        if len(self.full_name.split(" "))<2:
+8            raise NameError ("Check name")
+9        if 1900>birth_year or birth_year>2019:
+10            raise NameError("Check year")
+11
+12
+13    def get_name(self):
+14        x = self.full_name.find(" ")
+15        self.name = self.full_name[:x]
+16        return self.name
+17
+18
+19    def get_surname(self):
+20        x = self.full_name.find(" ")
+21        self.surname = self.full_name[x+1:]
+22        return self.surname
+23
+24    def get_age_in_year(self, y=None):
+25        if y is None:
+26            y = datetime.datetime.now().year
+27        if y<self.birth_year:
+28            return "Person was not born yet!"
+29        else:
+30             self.age = y - self.birth_year
+31             return self.age
+32
+33    def __str__(self):
+34        return f"Person with fulname  {self.full_name}, name {self.name}, surname {self.surname}, year of birthday {self.birth_year}"
+35
+36
+37a = Person("Vasya Pupkin", 1985)
+38print(a.get_name())
+39print(a.get_surname())
+40#print(a.get_age_in_year())
+41print(a)
+42
+43
+44class Employee(Person):
+45    def __init__(self, full_name, birth_year, position, experience, salary):
+46        Person.__init__(self, full_name, birth_year)
+47        self.position = position
+48        self.experience = experience
+49        self.salary = salary
+50        if experience < 0 or salary < 0:
+51            raise NameError("This person cannot work in our company")
+52
+53    def checking_position(self):
+54        if self.experience < 3:
+55            return "Junior " + self.position
+56        elif 3 <= self.experience < 6:
+57            return "Middle " + self.position
+58        else:
+59            return "Senior " + self.position
+60
+61    def raise_salary(self, add_to_salary):
+62        self.salary += add_to_salary
+63        return self.salary
+64
+65    def __str__(self):
+66        return f"Person with fulname  {self.full_name},  year of birthday {self.birth_year}, position {self.position}, " \
+67               f"salary {self.salary}, experience {self.experience}"
+68
+69
+70z = Employee("Nata Test", 1985, "QA", 6, 2500)
+71print(z.checking_position())
+72z.raise_salary(500)
+73print(z.salary)
+74print(z)
+75
+76
+77class ITEmployee(Employee):
+78    def __init__(self, full_name, birth_year, position, experience, salary, skills=None):
+79        Employee.__init__(self, full_name, birth_year, position, experience, salary)
+80        if skills is None:
+81            self.skills = []
+82        else:
+83            self.skills = skills
+84
+85
+86    def add_skill(self, skill):
+87        self.skills.append(skill)
+88
+89    def add_skills(self, *skills):
+90        for i in skills:
+91            self.skills.append(i)
+92
+93    def __str__(self):
+94        return f"Person with fullname  {self.full_name},  year of birthday {self.birth_year}, position {self.position}, salary {self.salary}, experience {self.experience}"
+95
+96
+97it_empl = ITEmployee("Nata Titiu", 1985, "Engineer", 5, 1500)
+98it_empl.add_skill("aaaa")
+99it_empl.add_skill("adsad")
+100it_empl.add_skills("a few", "sdasd", "sds")
+101print (it_empl)
